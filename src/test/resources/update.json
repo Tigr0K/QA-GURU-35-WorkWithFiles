@@ -1,0 +1,14 @@
+{
+    "fpCheckEntityKey": "180196452",
+    "updateData":
+    [
+        {
+            "checkKey": "180196453",
+            "checkCode": "checkGlass1",
+            "cclAttrKey": "49",
+            "cclAttrResultKey": "999999",
+            "value": 1,
+            "result": 1
+        }
+    ]
+}
