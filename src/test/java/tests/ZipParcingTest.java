@@ -16,14 +16,30 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 public class ZipParcingTest {
     private ClassLoader cl = ZipParcingTest.class.getClassLoader();
+
+    String sourceName = "src.zip";
+
+    @Test
+    @DisplayName("Проверка пустой ли архив")
+    void zipIsEmpty() throws Exception {
+        try (ZipInputStream zis = new ZipInputStream(
+                cl.getResourceAsStream(sourceName)
+        )) {
+            ZipEntry entry = zis.getNextEntry();
+            assertNotNull(entry, "Архив пустой");
+        }
+    }
+
 
     @Test
     @DisplayName("Тест pdf из архива")
     void zipPDFParsingTest() throws Exception {
         try (ZipInputStream zis = new ZipInputStream(
-                cl.getResourceAsStream("src.zip")
+                cl.getResourceAsStream(sourceName)
         )) {
             ZipEntry entry;
 
@@ -40,7 +56,7 @@ public class ZipParcingTest {
     @DisplayName("Тест xls из архива")
     void zipXLSParsingTest() throws Exception {
         try (ZipInputStream zis = new ZipInputStream(
-                cl.getResourceAsStream("src.zip")
+                cl.getResourceAsStream(sourceName)
         )) {
             ZipEntry entry;
 
@@ -61,7 +77,7 @@ public class ZipParcingTest {
     @Test
     @DisplayName("Тест csv из архива")
     void zipCSVParsingTest() throws Exception {
-        try (InputStream is = cl.getResourceAsStream("src.zip"); ZipInputStream zis = new ZipInputStream(is)) {
+        try (InputStream is = cl.getResourceAsStream(sourceName); ZipInputStream zis = new ZipInputStream(is)) {
             ZipEntry entry;
             while ((entry = zis.getNextEntry()) != null) {
                 if (entry.getName().endsWith(".csv")) {
