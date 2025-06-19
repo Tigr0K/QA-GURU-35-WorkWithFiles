@@ -24,24 +24,13 @@ public class ZipParcingTest {
     String sourceName = "src.zip";
 
     @Test
-    @DisplayName("Проверка пустой ли архив")
-    void zipIsEmpty() throws Exception {
-        try (ZipInputStream zis = new ZipInputStream(
-                cl.getResourceAsStream(sourceName)
-        )) {
-            ZipEntry entry = zis.getNextEntry();
-            assertNotNull(entry, "Архив пустой");
-        }
-    }
-
-
-    @Test
     @DisplayName("Тест pdf из архива")
     void zipPDFParsingTest() throws Exception {
         try (ZipInputStream zis = new ZipInputStream(
                 cl.getResourceAsStream(sourceName)
         )) {
-            ZipEntry entry;
+            ZipEntry entry = zis.getNextEntry();
+            assertNotNull(entry, "Архив пустой");
 
             while ((entry = zis.getNextEntry()) != null) {
                 if (entry.getName().endsWith(".pdf")) {
@@ -58,7 +47,8 @@ public class ZipParcingTest {
         try (ZipInputStream zis = new ZipInputStream(
                 cl.getResourceAsStream(sourceName)
         )) {
-            ZipEntry entry;
+            ZipEntry entry = zis.getNextEntry();
+            assertNotNull(entry, "Архив пустой");
 
             while ((entry = zis.getNextEntry()) != null) {
                 if (entry.getName().endsWith(".xlsx")) {
@@ -78,7 +68,8 @@ public class ZipParcingTest {
     @DisplayName("Тест csv из архива")
     void zipCSVParsingTest() throws Exception {
         try (InputStream is = cl.getResourceAsStream(sourceName); ZipInputStream zis = new ZipInputStream(is)) {
-            ZipEntry entry;
+            ZipEntry entry = zis.getNextEntry();
+            assertNotNull(entry, "Архив пустой");
             while ((entry = zis.getNextEntry()) != null) {
                 if (entry.getName().endsWith(".csv")) {
                     CSVReader csvReader = new CSVReader(new InputStreamReader(zis));
